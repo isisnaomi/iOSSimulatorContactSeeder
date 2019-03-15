@@ -7,13 +7,19 @@
 //
 
 import UIKit
+import AddressBook
+import Contacts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var contactStore = CNContactStore()
 
-
+    class func getAppDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -40,7 +46,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    
+    class func requestAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        switch CNContactStore.authorizationStatus(for: .contacts) {
+        case .authorized:
+            completionHandler(true)
+        case .denied:
+            return
+        case .restricted, .notDetermined:
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    completionHandler(true)
+                } else {
+                    DispatchQueue.main.async {
+                    }
+                }
+            }
+        }
+    }
+    
+    func showMessage(_ message: String) {
+        let alertController = UIAlertController(title: "Birthdays", message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        let dismissAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) -> Void in
+        }
+        
+        alertController.addAction(dismissAction)
+        
+        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
+        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        
+        presentedViewController.present(alertController, animated: true, completion: nil)
+    }
 
 }
 
