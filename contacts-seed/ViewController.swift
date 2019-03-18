@@ -15,6 +15,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var startContactSeedButton: UIButton!
     
+    @IBOutlet weak var numberContactsLabel: UITextField!
+    @IBOutlet weak var areaCodeLabel: UITextField!
+    @IBOutlet weak var digitsLabel: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         startContactSeedButton.addTarget(self, action: #selector(contactSeed), for: .touchUpInside)
@@ -25,9 +29,11 @@ class ViewController: UIViewController {
     }
     
     @objc func contactSeed(){
+        let totalContacts = Int(numberContactsLabel.text ?? "0")!
+            
         debugPrint("Contact seeding ...")
         AppDelegate.requestAccess{_ in
-            for x in 0...1500 {
+            for x in 0...totalContacts {
                 debugPrint("Seeding contact  #\(x)")
                 self.addRandomContact()
             }
@@ -37,10 +43,12 @@ class ViewController: UIViewController {
     func addRandomContact(){
         let newContact = CNMutableContact()
         newContact.givenName = randomString(length: 10)
+        let digits = Int(digitsLabel.text ?? "10")!
+        let phoneNumber = "\(areaCodeLabel.text ?? "")\(randomPhone(length: digits)) "
 
         newContact.phoneNumbers = [CNLabeledValue(
             label:CNLabelPhoneNumberiPhone,
-            value:CNPhoneNumber(stringValue:randomPhone(length: 10)))]
+            value:CNPhoneNumber(stringValue: phoneNumber ))]
         do {
             let saveRequest = CNSaveRequest()
             saveRequest.add(newContact, toContainerWithIdentifier: nil)
