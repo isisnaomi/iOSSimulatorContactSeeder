@@ -59,6 +59,13 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuP-Wm-M75">
+                                <rect key="frame" x="106" y="437.5" width="163" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete seeded contacts">
+                                    <color key="titleColor" red="1" green="0.19905598960000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -76,6 +83,7 @@
                         <outlet property="areaCodeLabel" destination="6T8-fl-5c2" id="J5g-o8-nf3"/>
                         <outlet property="digitsLabel" destination="nbI-rP-O8l" id="52z-4l-I3e"/>
                         <outlet property="numberContactsLabel" destination="FJP-la-ipa" id="hDm-T5-UyR"/>
+                        <outlet property="revertContactSeed" destination="CuP-Wm-M75" id="XCF-1T-iYo"/>
                         <outlet property="startContactSeedButton" destination="sGV-8A-iao" id="9t9-hB-y2W"/>
                     </connections>
                 </viewController>
