@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboard()
         startContactSeedButton.addTarget(self, action: #selector(contactSeed), for: .touchUpInside)
         revertContactSeed.addTarget(self, action: #selector(removeLastSeed), for: .touchUpInside)
     }
@@ -108,5 +109,23 @@ class ViewController: UIViewController {
         return String((0..<length).map{ _ in numbers.randomElement()! })
     }
 
+}
+
+extension UIViewController
+{
+    func hideKeyboard()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+        
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
 }
 
